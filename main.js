@@ -3,6 +3,8 @@ var right_wrist_y = 0;
 var left_wrist_x = 0;
 var left_wrist_y = 0;
 var scoreLeftWrist = 0;
+var scoreRightWrist = 0;
+
 
 
 var audio = "";
@@ -25,8 +27,36 @@ function draw(){
     fill("#ff0000");
     stroke("#ff0000");
 
+   
+    if (scoreRightWrist > 0.2) {
+        circle(right_wrist_x, right_wrist_y, 20);
+        if (right_wrist_y > 0 && right_wrist_y <= 100) {
+            document.getElementById("speed").innerHTML = "The Speed Is 0.5x" ;
+            audio.rate(0.5);
+        } 
+        
+        else if (right_wrist_y > 100 && right_wrist_y <= 200) {
+            document.getElementById("speed").innerHTML = "The Speed Is 1x" ;
+            audio.rate(1);
+        } 
 
+        else if (right_wrist_y > 200 && right_wrist_y <= 300) {
+            document.getElementById("speed").innerHTML = "The Speed Is 1.5x" ;
+            audio.rate(1.5);
+        } 
 
+        else if (right_wrist_y > 300 && right_wrist_y <= 400) {
+            document.getElementById("speed").innerHTML = "The Speed Is 2x" ;
+            audio.rate(2);
+        } 
+
+        else if (right_wrist_y > 400 && right_wrist_y <= 500) {
+            document.getElementById("speed").innerHTML = "The Speed Is 2.5x" ;
+            audio.rate(2.5);
+        } 
+
+    }
+   
 
 
 
@@ -55,7 +85,8 @@ function modelLoaded(){
 function gotPoses(results){
     if (results.length > 0) {
         scoreLeftWrist = results[0].pose.keypoints[9].score;
-        console.log("Left Wrist Score = " + scoreLeftWrist);
+        scoreRightWrist = results[0].pose.keypoints[10].score;
+        console.log("Left Wrist Score = " + scoreLeftWrist + "Right Wrist Score = " + scoreRightWrist);
 
         console.log(results);
         right_wrist_x = results[0].pose.rightWrist.x;
